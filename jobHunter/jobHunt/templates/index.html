@@ -1,0 +1,121 @@
+{% load static %}
+{{ '<' }}{{ '!DOCTYPE html>' }}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Job Hunt </title>
+    <link rel="stylesheet" href="{% static 'style.css' %}?v=1">
+</head>
+<body class="anti-scroll">
+    <div class="main-box">
+        <div class="content">
+            <h1 class="app-name"> Job Hunt App </h1>
+            <form action="search/" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                <div class="input">
+                    <label for="query"> Search query: </label><br>
+                    <input type="text" id="query" name="query"><br>
+                </div>
+                <div class="input">
+                    <label for="city"> City: </label><br>
+                    <input type="text" id="city" name="city"><br>
+                </div>
+                <div class="input">
+                    <label for="country"> Country: </label><br>
+                    <input type="text" id="country" name="country"><br>
+                </div>
+                <div class="input">
+                    <label for="hours_old"> Posts since _ hours ago: </label><br>
+                    <input type="text" id="hours_old" name="hours_old"><br>
+                </div>
+                    <button class="button" type="submit"> Search </button>
+            </form>
+        </div>
+
+        <div class="job-list">
+            <ul class="job-posts">
+                {% for job in job_posts %}
+                <li class="job-post">
+                    <button type="submit" class="job-button"
+                            data-title="{{ job.title }}"
+                            data-company="{{ job.company }}"
+                            data-date_posted="{{ job.date_posted }}"
+                            data-description="{{ job.description }}"
+                            data-link="{{ job.link }}">
+                        {{ job.title }}
+                    </button>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="job-spec">
+            <div id="job-detail" class="job-detail">
+                <div class="job-detail-text">
+                    <h2 id="detail-title"></h2>
+                    <h3 id="detail-company"></h3>
+                    <h4 id="detail-date_posted"></h4>
+                    <a id="detail-link" href="#"></a>
+                    <p id="detail-description"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-box sub-box">
+        <div class="content invisible">
+        </div>
+         <div class="content invisible cover-letter">
+            <form  id="statistics-input" action="/home/show-statistics/" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="statistics" id="statistics" />
+                <button class="button" type="submit"> Show statistics </button>
+            </form>
+        </div>
+        <div class="content invisible cover-letter">
+            <form  id="cover-letter-input" action="/home/write-cover-letter/" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="job-description" id="job-description" />
+                <button class="button cover-letter-button" type="submit"> Generate cover letter </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function showJobDetail(event) {
+            const button = event.currentTarget;
+
+            const title = button.dataset['title'];
+            const description = button.dataset['description'];
+            const company = button.dataset['company'];
+            const date_posted = button.dataset['date_posted'];
+            const link = button.dataset['link'];
+
+            document.getElementById('detail-title').innerText = title;
+            document.getElementById('detail-company').innerText = company;
+            document.getElementById('detail-description').innerText = description;
+            document.getElementById('detail-date_posted').innerText = date_posted;
+            document.getElementById('detail-link').innerText = 'Link to job';
+            document.getElementById('detail-link').href = link;
+            document.getElementById('job-detail').style.display = 'block';
+        }
+
+        function initializeJobButtons() {
+            const buttons = document.querySelectorAll('.job-button');
+            buttons.forEach(function(button) {
+                button.addEventListener('click', showJobDetail);
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', initializeJobButtons);
+
+        var cover_letter_input = document.getElementById('cover-letter-input');
+        function handleJobDescription(event) {
+            const job_description = document.getElementById('detail-description').innerText;
+            document.getElementById('job-description').value = job_description;
+        }
+
+        cover_letter_input.addEventListener('submit', handleJobDescription);
+    </script>
+</body>
+</html>

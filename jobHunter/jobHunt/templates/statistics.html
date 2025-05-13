@@ -1,0 +1,103 @@
+{% load static %}
+{{ '<' }}{{ '!DOCTYPE html>' }}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Title </title>
+    <link rel="stylesheet" href="{% static 'statistics-style.css' %}?v=1">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="main-box">
+        <div class="container">
+            <h1> Common languages </h1>
+            <canvas id="languages-chart" class="chart"></canvas>
+        </div>
+        <div class="container">
+            <h1> Common technologies </h1>
+            <canvas id="technologies-chart" class="chart"></canvas>
+        </div>
+        <div class="container">
+            <h1> Common words </h1>
+            <canvas id="words-chart" class="chart"></canvas>
+        </div>
+        <div class="container">
+        </div>
+        <div class="container">
+        </div>
+        <div class="container">
+        </div>
+    </div>
+
+    <script>
+      const languages_chart = document.getElementById('languages-chart');
+      const languages_list = {{ languages_list|safe }};
+      const languages_freq = {{ languages_freq|safe }};
+
+      new Chart(languages_chart, {
+        type: 'bar',
+        data: {
+          labels: languages_list,
+          datasets: [{
+            label: 'Number of occurrences',
+            data: languages_freq,
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
+      const technologies_chart = document.getElementById('technologies-chart');
+      const technologies_list = {{ technologies_list|safe }};
+      const technologies_freq = {{ technologies_freq|safe }};
+
+      new Chart(technologies_chart, {
+        type: 'bar',
+        data: {
+          labels: technologies_list,
+          datasets: [{
+            label: 'Number of occurrences',
+            data: technologies_freq,
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
+      const words_chart = document.getElementById('words-chart');
+      const words_list = {{ words_list|safe }};
+      const words_freq = {{ words_freq|safe }};
+
+      new Chart(words_chart, {
+        type: 'bar',
+        data: {
+          labels: words_list,
+          datasets: [{
+            label: 'Number of occurrences',
+            data: words_freq,
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    </script>
+</body>
+</html>

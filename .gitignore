@@ -1,0 +1,27 @@
+# Django
+*.log
+*.pot
+*.pyc
+__pycache__/
+db.sqlite3
+/media/
+/staticfiles/
+
+# Python Env
+env/
+venv/
+.venv/
+.env
+
+# Secrets
+client_secret.json
+token.json
+
+# VS Code or other editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
