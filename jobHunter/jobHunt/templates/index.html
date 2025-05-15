@@ -7,80 +7,99 @@
     <link rel="stylesheet" href="{% static 'style.css' %}?v=1">
 </head>
 <body class="anti-scroll">
-    <div class="main-box">
-        <div class="content">
-            <h1 class="app-name"> Job Hunt App </h1>
-            <form action="search/" enctype="multipart/form-data" method="POST">
-                {% csrf_token %}
-                <div class="input">
-                    <label for="query"> Search query: </label><br>
-                    <input type="text" id="query" name="query"><br>
-                </div>
-                <div class="input">
-                    <label for="city"> City: </label><br>
-                    <input type="text" id="city" name="city"><br>
-                </div>
-                <div class="input">
-                    <label for="country"> Country: </label><br>
-                    <input type="text" id="country" name="country"><br>
-                </div>
-                <div class="input">
-                    <label for="hours_old"> Posts since _ hours ago: </label><br>
-                    <input type="text" id="hours_old" name="hours_old"><br>
-                </div>
-                    <button class="button" type="submit"> Search </button>
-            </form>
-        </div>
+    <div class="all">
+        <div class="main-box">
+            <div class="content">
+                <h1 class="app-name"> Job Hunt App </h1>
+                <form action="search/" enctype="multipart/form-data" method="POST">
+                    {% csrf_token %}
+                    <div class="input">
+                        <label for="query"> Search query: </label><br>
+                        <input type="text" id="query" name="query"><br>
+                    </div>
+                    <div class="input">
+                        <label for="city"> City: </label><br>
+                        <input type="text" id="city" name="city"><br>
+                    </div>
+                    <div class="input">
+                        <label for="country"> Country: </label><br>
+                        <input type="text" id="country" name="country"><br>
+                    </div>
+                    <div class="input">
+                        <label for="hours_old"> Posts since _ hours ago: </label><br>
+                        <input type="text" id="hours_old" name="hours_old"><br>
+                    </div>
+                        <button class="search-button" type="submit"> Search </button>
+                </form>
+            </div>
 
-        <div class="job-list">
-            <ul class="job-posts">
-                {% for job in job_posts %}
-                <li class="job-post">
-                    <button type="submit" class="job-button"
-                            data-title="{{ job.title }}"
-                            data-company="{{ job.company }}"
-                            data-date_posted="{{ job.date_posted }}"
-                            data-description="{{ job.description }}"
-                            data-link="{{ job.link }}">
-                        {{ job.title }}
-                    </button>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
+            <div class="job-list">
+                <ul class="job-posts">
+                    {% for job in job_posts %}
+                    <li class="job-post">
+                        <button type="submit" class="job-button"
+                                data-title="{{ job.title }}"
+                                data-company="{{ job.company }}"
+                                data-date_posted="{{ job.date_posted }}"
+                                data-description="{{ job.description }}"
+                                data-link="{{ job.link }}">
+                            {{ job.title }}
+                        </button>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
 
-        <div class="job-spec">
-            <div id="job-detail" class="job-detail">
-                <div class="job-detail-text">
-                    <h2 id="detail-title"></h2>
-                    <h3 id="detail-company"></h3>
-                    <h4 id="detail-date_posted"></h4>
-                    <a id="detail-link" href="#"></a>
-                    <p id="detail-description"></p>
+            <div class="job-spec">
+                <div id="job-detail" class="job-detail">
+                    <div class="job-detail-text">
+                        <h2 id="detail-title"></h2>
+                        <h3 id="detail-company"></h3>
+                        <h4 id="detail-date_posted"></h4>
+                        <a id="detail-link" href="#"></a>
+                        <p id="detail-description"></p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="main-box sub-box">
-        <div class="content invisible">
-        </div>
-         <div class="content invisible cover-letter">
-            <form  id="statistics-input" action="/home/show-statistics/" method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="statistics" id="statistics" />
-                <button class="button" type="submit"> Show statistics </button>
-            </form>
-        </div>
-        <div class="content invisible cover-letter">
-            <form  id="cover-letter-input" action="/home/write-cover-letter/" enctype="multipart/form-data" method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="job-description" id="job-description" />
-                <button class="button cover-letter-button" type="submit"> Generate cover letter </button>
-            </form>
+        <div class="main-box sub-box">
+             <div class="content invisible cover-letter">
+                <form  id="statistics-input" action="/home/show-statistics/" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="statistics" id="statistics" />
+                    <button class="button" type="submit"> Show statistics </button>
+                </form>
+            </div>
+            <div class="content invisible cover-letter filter">
+                <div class="filter-split">
+                    <div class="dropdown">
+                      <button onclick="dropdown()" class="dropdown-button"> Sort by: </button>
+                      <div id="dropdown-content" class="dropdown-content">
+                        <a href="?sort=date_posted"> Date posted </a>
+                        <a href="?sort=location"> Location </a>
+                        <a href="?sort=title"> Title </a>
+                          <a href="?sort=company"> Company name </a>
+                      </div>
+                    </div>
+                    <div class="dropdown">
+                      <button onclick="dropdown2()" class="dropdown-button"> Order: </button>
+                      <div id="dropdown-content2" class="dropdown-content">
+                        <a href="?direction=ASC"> Ascending </a>
+                        <a href="?direction=DESC"> Descending </a>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content invisible cover-letter">
+                <form  id="cover-letter-input" action="/home/write-cover-letter/" enctype="multipart/form-data" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="job-description" id="job-description" />
+                    <button class="button cover-letter-button" type="submit"> Generate cover letter </button>
+                </form>
+            </div>
         </div>
     </div>
-
     <script>
         function showJobDetail(event) {
             const button = event.currentTarget;
@@ -116,6 +135,40 @@
         }
 
         cover_letter_input.addEventListener('submit', handleJobDescription);
+
+        function dropdown() {
+          document.getElementById("dropdown-content").classList.toggle("show");
+        }
+
+        function dropdown2() {
+          document.getElementById("dropdown-content2").classList.toggle("show");
+        }
+
+        window.onclick = function(event) {
+          if (!event.target.matches('.dropdown-button')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+              var openDropdown = dropdowns[i];
+              if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+              }
+            }
+          }
+        }
+
+        window.onclick = function(event) {
+          if (!event.target.matches('.dropdown-button')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content2");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+              var openDropdown = dropdowns[i];
+              if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+              }
+            }
+          }
+        }
     </script>
 </body>
 </html>

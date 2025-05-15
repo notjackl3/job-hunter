@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import FileResponse, HttpResponse
-from django.urls import reverse
+from django.db import connection
 from .jobscrape import scrape
 from .coverletter import write
 from .models import JobPost
@@ -10,6 +10,8 @@ import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords, wordnet
 from nltk.stem import WordNetLemmatizer
+import re
+
 
 # import nltk
 # import ssl
@@ -81,7 +83,7 @@ popular_technologies = [
     "django",
     "flask",
     "spring",
-    "node.js",
+    "node",
     "express",
     "fastapi",
     "graphql",
@@ -106,7 +108,7 @@ def get_wordnet_pos(tag):
     elif tag.startswith('R'):
         return wordnet.ADV
     else:
-        return wordnet.NOUN  # default
+        return wordnet.NOUN
 
 
 def detect_action_words(text):
@@ -124,7 +126,25 @@ def detect_action_words(text):
 
 
 def home(request):
-    existing_job_posts = request.session.get('job_posts')
+    existing_job_posts = []
+    sort_by = request.GET.get("sort", "date_posted")
+    direction = request.GET.get("direction", "ASC")
+    ordering = f"{'' if direction == 'ASC' else '-'}{sort_by}"
+    # with connection.cursor() as cursor:
+    #     cursor.execute(f"""
+    #         SELECT title, company, date_posted, description, keywords, link
+    #         FROM "jobHunt_jobpost"
+    #         ORDER BY {sort_by} {direction};
+    #         """)
+    #     results = cursor.fetchall()
+    #     for result in results:
+    #         existing_job_posts.append({"title": result[0],
+    #                                    "company": result[1],
+    #                                    "date_posted": result[2],
+    #                                    "description": result[3],
+    #                                    "keywords": result[4],
+    #                                    "link": result[5]})
+    existing_job_posts = JobPost.objects.all().order_by(ordering)
     if existing_job_posts:
         context = {"job_posts": existing_job_posts}
         return render(request, "index.html", context)
@@ -138,10 +158,25 @@ def add_job(request):
     country = request.POST.get("country")
     result_num = 100
     hours_old = request.POST.get("hours_old")
-    job_posts = scrape(query, city, country, result_num, hours_old)
+    scrape(query, city, country, result_num, hours_old)
+    # job_posts = scrape(query, city, country, result_num, hours_old)
     # context = {"job_posts": job_posts}
     # return render(request, 'index.html', context)
-    request.session['job_posts'] = job_posts
+    # job_posts = []
+    # with connection.cursor() as cursor:
+    #     cursor.execute("""
+    #         SELECT title, company, date_posted, description, keywords, link
+    #         FROM "jobHunt_jobpost";
+    #         """)
+    #     results = cursor.fetchall()
+    #     for result in results:
+    #         job_posts.append({"title": result[0],
+    #                           "company": result[1],
+    #                           "date_posted": result[2],
+    #                           "description": result[3],
+    #                           "keywords": result[4],
+    #                           "link": result[5]})
+    # request.session['job_posts'] = job_posts
     return redirect("/home")
 
 
@@ -161,8 +196,8 @@ def show_statistics(request):
     words = []
     for row in descriptions:
         action_words = detect_action_words(row)
-        action_words = [x for x in action_words if x != "work"]  # this word is too common
-        temp = row.split()
+        action_words = [x for x in action_words if x.lower() != "work"]  # this word is too common
+        temp = re.split(r'[ ,.;\'\"!/()]', row)
 
         words.extend(action_words)
         languages.extend([x.lower() for x in temp if x.lower() in popular_languages])
@@ -171,7 +206,7 @@ def show_statistics(request):
     Counters_found = Counter(languages)
     most_occur_languages = Counters_found.most_common()
     Counters_found = Counter(technologies)
-    most_occur_technologies = Counters_found.most_common()
+    most_occur_technologies = Counters_found.most_common(20)
     Counters_found = Counter(words)
     most_occur_words = Counters_found.most_common(20)
 
@@ -182,8 +217,19 @@ def show_statistics(request):
     words_list = [x[0] for x in most_occur_words]
     words_freq = [x[1] for x in most_occur_words]
 
+    dates_posted = JobPost.objects.values_list('date_posted', flat=True)
+    dates = [date.strftime('%Y-%m-%d') for date in dates_posted if date is not None]
+
+    Counters_found = Counter(dates)
+    most_occur_dates = Counters_found.most_common()
+    most_occur_dates.sort(key=lambda x: x[0])
+
+    dates_list = [x[0] for x in most_occur_dates]
+    dates_freq = [x[1] for x in most_occur_dates]
+
     context = {"languages_list": json.dumps(languages_list), "languages_freq": json.dumps(languages_freq),
                "technologies_list": json.dumps(technologies_list), "technologies_freq": json.dumps(technologies_freq),
-               "words_list": json.dumps(words_list), "words_freq": json.dumps(words_freq)}
+               "words_list": json.dumps(words_list), "words_freq": json.dumps(words_freq),
+               "dates_list": dates_list, "dates_freq": dates_freq}
 
     return render(request, "statistics.html", context)

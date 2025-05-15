@@ -22,6 +22,8 @@
             <canvas id="words-chart" class="chart"></canvas>
         </div>
         <div class="container">
+            <h1> Date posted </h1>
+            <canvas id="dates-chart" class="chart"></canvas>
         </div>
         <div class="container">
         </div>
@@ -87,6 +89,29 @@
           datasets: [{
             label: 'Number of occurrences',
             data: words_freq,
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
+      const dates_chart = document.getElementById('dates-chart');
+      const dates_list = {{ dates_list|safe }};
+      const dates_freq = {{ dates_freq|safe }};
+
+      new Chart(dates_chart, {
+        type: 'line',
+        data: {
+          labels: dates_list,
+          datasets: [{
+            label: 'Number of occurrences',
+            data: dates_freq,
             borderWidth: 1
           }]
         },

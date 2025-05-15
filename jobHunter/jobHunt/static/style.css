@@ -39,9 +39,30 @@
 }
 
 .button {
-    margin: 20px 0px 0px 0px;
-    padding: 5px 10px 5px 10px;
-    box-shadow: 5px 5px #558abb;
+    margin: 10px 0px 0px 0px;
+    padding: 10px 15px 10px 15px;
+    min-width: 300px;
+    border-radius: 5px;
+    background-color: steelblue;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.search-button {
+    margin: 10px 0px 0px 0px;
+    padding: 10px 15px 10px 15px;
+    border-radius: 5px;
+    background-color: steelblue;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #005A9C;
 }
 
 .job-list {
@@ -130,20 +151,16 @@
 }
 
 .button.cover-letter-button {
-    padding: 5px 50px 5px 50px;
-    border-radius: 3px;
     border-width: 1px;
     box-shadow: 5px 5px;
     transform: scale(1);
     transition: all 0.1s ease-out;
 }
 
-.button.cover-letter-button:hover {
-    padding: 5px 15px 5px 15px;
-    transform: scale(1.1);
+.button:hover {
+    background-color: #2D68C4;
     transition: all 0.1s ease-out;
 }
-
 
 .modal {
   background-color: rgba(0, 0, 0, 0.8); /* dark transparent background */
@@ -169,4 +186,72 @@
   background: white;
   padding: 20px;
   border-radius: 10px;
+}
+
+.all {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.dropdown-button {
+    margin: 10px 0px 0px 0px;
+    padding: 10px 15px 10px 15px;
+    min-width: 150px;
+    background-color: #4B9CD3;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-button:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: lightblue;
+  color: white;
+  min-width: 150px;
+  z-index: 999;
+}
+
+.dropdown-content2 {
+  display: none;
+  position: absolute;
+  background-color: lightblue;
+  color: white;
+  min-width: 150px;
+  z-index: 999;
+}
+
+.dropdown-content a {
+  color: white;
+  font-size: 12px;
+  padding: 10px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #2D68C4;
+}
+
+.dropdown-content.show {
+    display:block;
+}
+
+.filter-split {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    justify-content: space-evenly;
 }

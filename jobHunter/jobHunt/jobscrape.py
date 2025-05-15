@@ -1,9 +1,11 @@
 import csv
 import tempfile
 import pandas as pd
-from jobspy import scrape_jobs
+from jobspy2 import scrape_jobs
 from .models import JobPost
 from django.db import connection
+from datetime import datetime
+import pycountry
 
 
 # def job_exists(title, company, date_posted):
@@ -48,30 +50,38 @@ def scrape(query: str, city: str, country: str, results_num: int, hours_old: int
 
         df = pd.read_csv(output_file)
 
-        job_posts = []
+        # job_posts = []
         for index, row in df.iterrows():
             title = row["title"]
             company = row["company"]
             date_posted = row["date_posted"]
+            try:
+                date = datetime.strptime(date_posted, "%Y-%m-%d").date()
+            except ValueError:
+                date = None
+            except TypeError:
+                date = None
             description = row["description"]
             keywords = ""
             link = row["job_url"]
+            location = row["location"]
+            country = pycountry.countries.search_fuzzy(location.split(",")[-1])[0].name
 
             new_post = JobPost(site=row["site"],
                                title=title,
                                company=company,
-                               date_posted=date_posted,
+                               date_posted=date,
                                description=description,
-                               location=row["location"])
+                               location=country,
+                               keywords=keywords,
+                               link=link)
             new_post.save()
 
-            job_posts.append({"title": title,
-                              "company": company,
-                              "date_posted": date_posted,
-                              "description": description,
-                              "keywords": keywords,
-                              "link": link})
+            # job_posts.append({"title": title,
+            #                   "company": company,
+            #                   "date_posted": date_posted,
+            #                   "description": description,
+            #                   "keywords": keywords,
+            #                   "link": link})
 
         delete_duplicate_jobs()
-
-        return job_posts
