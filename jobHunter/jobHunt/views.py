@@ -11,6 +11,7 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords, wordnet
 from nltk.stem import WordNetLemmatizer
 import re
+from rest_framework.decorators import api_view
 
 
 # import nltk
@@ -233,3 +234,23 @@ def show_statistics(request):
                "dates_list": dates_list, "dates_freq": dates_freq}
 
     return render(request, "statistics.html", context)
+
+
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.permissions import AllowAny
+from rest_framework.decorators import api_view, permission_classes
+
+@api_view(["DELETE"])
+@permission_classes([AllowAny])
+def delete_job(request, id):
+    try:
+        job = JobPost.objects.get(id=id)
+        job.delete()
+        return Response({"message": "Job deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+    except JobPost.DoesNotExist:
+        return Response({"error": "Job not found"}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response({"error": "Server error"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+

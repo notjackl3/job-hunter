@@ -8,16 +8,6 @@ from datetime import datetime
 import pycountry
 
 
-# def job_exists(title, company, date_posted):
-#     with connection.cursor() as cursor:
-#         cursor.execute("""
-#             SELECT * FROM "jobHunt_jobpost"
-#             WHERE title = %s AND company = %s
-#             LIMIT 1
-#         """, [title, company, date_posted])
-#         result = cursor.fetchone()
-
-
 def delete_duplicate_jobs():
     with connection.cursor() as cursor:
         cursor.execute("""
@@ -67,21 +57,15 @@ def scrape(query: str, city: str, country: str, results_num: int, hours_old: int
             location = row["location"]
             country = pycountry.countries.search_fuzzy(location.split(",")[-1])[0].name
 
-            new_post = JobPost(site=row["site"],
-                               title=title,
-                               company=company,
-                               date_posted=date,
-                               description=description,
-                               location=country,
-                               keywords=keywords,
-                               link=link)
-            new_post.save()
-
-            # job_posts.append({"title": title,
-            #                   "company": company,
-            #                   "date_posted": date_posted,
-            #                   "description": description,
-            #                   "keywords": keywords,
-            #                   "link": link})
+            if not JobPost.objects.filter(title=title).exists():
+                new_post = JobPost(site=row["site"],
+                                title=title,
+                                company=company,
+                                date_posted=date,
+                                description=description,
+                                location=country,
+                                keywords=keywords,
+                                link=link)
+                new_post.save()
 
         delete_duplicate_jobs()

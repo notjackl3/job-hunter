@@ -3,6 +3,7 @@ from django.utils import timezone
 
 
 class JobPost(models.Model):
+    id = models.AutoField(primary_key=True) 
     site = models.CharField(max_length=100, default="none")
     title = models.CharField(max_length=200, default="none")
     company = models.CharField(max_length=200, default="none")
