@@ -9,11 +9,6 @@
     overflow: hidden;
 }
 
-.app-name {
-    color: white;
-    font-size: 40px;
-    text-shadow: 10px 10px #558abb;
-}
 
 .main-box {
     display: flex;
@@ -22,32 +17,26 @@
     margin: 100px 100px 0px 100px;
 }
 
-.content {
-    width: 400px;
-    height: 500px;
-    border-radius: 25px;
-    background-color: lightblue;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
 .input {
     margin: 10px 0px 0px 0px;
 }
 
 .button {
-    margin: 10px 0px 0px 0px;
+    width: 100%;
     padding: 10px 15px 10px 15px;
-    min-width: 300px;
-    border-radius: 5px;
     background-color: steelblue;
     color: white;
     font-size: 16px;
     border: none;
     cursor: pointer;
+}
+
+.statistics-button {
+    width: 100%;
+}
+
+.letter-button {
+    width: 100%;
 }
 
 .search-button {
@@ -65,118 +54,9 @@
     background-color: #005A9C;
 }
 
-.job-list {
-    width: 400px;
-    height: 500px;
-    background-color: lightblue;
-    border-radius: 25px;
-}
-
-.job-posts {
-    width: 410px;
-    height: 450px;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-}
-
-.job-posts::-webkit-scrollbar {
-    display: none; /* hides the scroll bar */
-}
-
-.job-post {
-    color: white;
-    font-size: 20px;
-    width: fit-content;
-    list-style: none;
-    margin: 10px 0px 0px 0px;
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    align-items: center;
-}
-
-.job-button {
-    width: 300px;
-    height: 50px;
-    border-radius: 15px;
-    border-width: 0px;
-    text-align: left;
-    background-color: white;
-    box-shadow: 0px 3px 3px 0px rgb(0,0,0,.5);
-    transform: scale(1);
-}
-
-.job-button:hover {
-    background-color: lightgrey;
-    transform: scale(1.1);
-}
-
-.delete-button {
-    border: none;
-    background-color: #E0FFFF;
-    color: black;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    box-shadow: 0px 2px 2px 0px rgb(0,0,0,.5);
-}
-
-.delete-button:hover {
-    background-color: #F08080;
-    color: white;
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-}
-
-
-.job-spec {
-    width: 400px;
-    height: 500px;
-    background-color: lightblue;
-    border-radius: 25px;
-    display: flex;
-    flex-direction: column;
-    overflow-y:auto;
-    padding: 20px;
-    -webkit-box-sizing: border-box;
-}
-
-.job-detail {
-    background-color: white;
-    border-radius: 15px;
-    padding: 10px;
-    height: 100%;
-    overflow: hidden;
-}
-
-.job-detail-text {
-    background-color: white;
-    border-radius: 15px;
-    padding: 10px;
-    height: 100%;
-    overflow-y: auto;
-}
-
-.content.invisible {
-    background-color: transparent;
-}
-
-.content.cover-letter {
-    height: 50px;
-}
-
 .main-box.sub-box {
     margin-top: 0px;
     align-items: start;
-}
-
-.button.cover-letter-button {
-    border-width: 1px;
-    box-shadow: 5px 5px;
-    transform: scale(1);
-    transition: all 0.1s ease-out;
 }
 
 .button:hover {
@@ -210,10 +90,17 @@
   border-radius: 10px;
 }
 
+.dropdown {
+    width: 100%;   
+    height: auto;
+    
+    display: flex;
+    flex-direction: column;
+}
+
 .dropdown-button {
-    margin: 10px 0px 0px 0px;
+    width: 100%;
     padding: 10px 15px 10px 15px;
-    min-width: 150px;
     background-color: #4B9CD3;
     color: white;
     font-size: 16px;
@@ -225,33 +112,21 @@
   background-color: #2980B9;
 }
 
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
 .dropdown-content {
+  display:flex;
   display: none;
-  position: absolute;
+  flex-direction: column;
+  position: relative;
   background-color: lightblue;
   color: white;
-  min-width: 150px;
-  z-index: 999;
-}
-
-.dropdown-content2 {
-  display: none;
-  position: absolute;
-  background-color: lightblue;
-  color: white;
-  min-width: 150px;
+  width: 50%;
   z-index: 999;
 }
 
 .dropdown-content a {
   color: white;
   font-size: 12px;
-  padding: 10px 16px;
+  padding: 10px 10px;
   text-decoration: none;
   display: block;
 }
@@ -261,15 +136,9 @@
 }
 
 .dropdown-content.show {
-    display:block;
-}
-
-.filter-split {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    align-items: center;
-    justify-content: space-evenly;
+    width: 100%;
+    display:flex;
+    flex-direction: column;
 }
 
 /* ######################################## */
@@ -278,8 +147,7 @@
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
-    background-color: blue;
-
+ 
     padding: 2rem 1em;
 }
 
@@ -289,13 +157,155 @@
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
     margin: 10px;
 
-    background-color: red;
+    background-color: lightblue;
 }
 
+.sub-container {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.sub-container.list {
+    margin-bottom: 10px;
+}
+
+.sub-container.bottom {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+}
+
+.sub-container.bottom.split {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: end;
+}
+
+.app-name {
+    color: white;
+    font-size: 2em;
+    text-shadow: 0.2em 0.2em #558abb;
+}
+
+.job-list {
+    width: 100%;
+    height: 100%;
+}
+
+.job-posts {
+    width: 100%;
+    height: 95%;
+
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    align-items: center;
+    padding: 0;
+}
+
+.job-posts::-webkit-scrollbar {
+    display: none; /* hides the scroll bar */
+}
+
+.job-post {
+    width: 80%;
+    color: white;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+
+    padding-top: 1em;
+}
+
+.job-button {
+    width: 90%;
+    height: 5em;
+    border-radius: 15px;
+    border-width: 0px;
+
+    text-align: left;
+    font-size: 0.5em;
+    background-color: white;
+    box-shadow: 0px 3px 3px 0px rgb(0,0,0,.5);
+    transform: scale(1);
+}
+
+.job-button:hover {
+    background-color: lightgrey;
+    transform: scale(1.1);
+}
+
+.delete-button {
+    border: none;
+    background-color: #E0FFFF;
+    color: black;
+    border-radius: 50%;
+    width: 2em;
+    height: 2em;
+    box-shadow: 0px 2px 2px 0px rgb(0,0,0,.5);
+}
+
+.delete-button:hover {
+    background-color: #F08080;
+    color: white;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+}
+
+.job-spec {
+    width: 90%;
+    height: 100%;
+    background-color: lightblue;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    overflow-y:auto;
+    padding: 20px;
+    -webkit-box-sizing: border-box;
+}
+
+.job-detail {
+    background-color: white;
+    border-radius: 15px;
+    padding: 10px;
+    height: 100%;
+    overflow: hidden;
+}
+
+.job-detail-text {
+    border-radius: 15px;
+    padding: 10px;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.job-detail-text h1 { font-size: 1em; }
+.job-detail-text h2 { font-size: 0.9em; }
+.job-detail-text h3, .job-detail-text a, .job-detail-text p { font-size: 0.7em; }
+
 @media only screen and (max-width: 768px) {
+    .anti-scroll {
+        overflow: auto;
+    }
+
     .all {
         display: flex;
         flex-direction: column;
