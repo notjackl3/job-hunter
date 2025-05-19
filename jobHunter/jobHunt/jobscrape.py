@@ -22,7 +22,7 @@ def delete_duplicate_jobs():
 
 def scrape(query: str, city: str, country: str, results_num: int, hours_old: int = 366):
     jobs = scrape_jobs(
-        site_name=["indeed", "linkedin", "glassdoor", "google"],
+        site_name=["indeed", "linkedin", "google"],
         search_term=query,
         location=f"{city}, {country}",
         country_indeed=country,

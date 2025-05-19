@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+    
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -86,12 +87,12 @@ WSGI_APPLICATION = 'jobHunter.wsgi.application'
 load_dotenv()
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv("ENGINE"),
-        'NAME': os.getenv("NAME"),
-        'USER': os.getenv("USER"),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',
+        'USER': 'postgres',
         'PASSWORD': os.getenv("PASSWORD"),
-        'HOST': os.getenv("HOST"),
-        'PORT': os.getenv("PORT"),
+        'HOST': 'db.utdjspmupbywniwoebya.supabase.co',
+        'PORT': '5432',
     }
 }
 
