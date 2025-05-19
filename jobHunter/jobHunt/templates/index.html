@@ -4,14 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Job Hunt </title>
+    <title> Job Hunter </title>
     <link rel="stylesheet" href="{% static 'style.css' %}?v=1">
 </head>
 <body class="anti-scroll">
     <div class="all">
         <div class="container">
             <div class="sub-container">
-                <h1 class="app-name"> Job Hunt App </h1>
+                <div class="title">
+                    <h1 class="app-name"> Job Hunter </h1>
+                    <p class="app-desc"> What jobs are you craving for? </p>
+                </div>
                 <form action="search/" enctype="multipart/form-data" method="POST">
                     {% csrf_token %}
                     <div class="input">
@@ -33,7 +36,7 @@
                         <button class="search-button" type="submit"> Search </button>
                 </form>
             </div>
-            <div class="sub-container bottom">
+            <div class="sub-container bottom" id="statistics-container">
                 <div class="statistics-button">
                     <form id="statistics-input" action="/home/show-statistics/" method="POST">
                         {% csrf_token %}
@@ -49,7 +52,7 @@
                     <ul class="job-posts">
                         {% for job in job_posts %}
                         <li class="job-post">
-                            <button type="submit" class="job-button"
+                            <button type="submit" class="job-button" onclick="jsEnableElement('cover-letter-button');"
                                     data-title="{{ job.title }}"
                                     data-company="{{ job.company }}"
                                     data-date_posted="{{ job.date_posted }}"
@@ -64,7 +67,7 @@
                 </div>
             </div>
             <div class="sub-container bottom split">
-                <div class="dropdown">
+                <div class="dropdown-4">
                     <button onclick="dropdown()" class="dropdown-button"> Sort by: </button>
                     <div id="dropdown-content" class="dropdown-content">
                         <a href="#" onclick="updateQuery('sort', 'date_posted')"> Date posted </a>
@@ -73,19 +76,13 @@
                         <a href="#" onclick="updateQuery('sort', 'company')"> Company name </a>
                     </div>
                 </div>
-                <div class="dropdown">
-                    <button onclick="dropdown2()" class="dropdown-button"> Order: </button>
-                    <div id="dropdown-content" class="dropdown-content">
-                        <a href="#" onclick="updateQuery('sort', 'date_posted')"> Date posted </a>
-                        <a href="#" onclick="updateQuery('sort', 'location')"> Location </a>
-                        <a href="#" onclick="updateQuery('sort', 'title')"> Title </a>
-                        <a href="#" onclick="updateQuery('sort', 'company')"> Company name </a>
+                <div class="dropdown-2">
+                    <button onclick="dropdown2()" class="dropdown-button"> Sort by: </button>
+                    <div id="dropdown-content2" class="dropdown-content">
+                        <a href="#" onclick="updateQuery('direction', 'ASC')"> Ascending </a>
+                        <a href="#" onclick="updateQuery('direction', 'DESC')"> Descending </a>
                     </div>
                 </div>
-                <!-- <div id="dropdown-content2" class="dropdown-content">
-                    <a href="#" onclick="updateQuery('direction', 'ASC')"> Ascending </a>
-                    <a href="#" onclick="updateQuery('direction', 'DESC')"> Descending </a>
-                </div> -->
             </div>
         </div>
         <div class="container">
@@ -103,87 +100,24 @@
                 </div>
             </div>
             <div class="sub-container bottom">
-                <div class="letter-button">
+                <div class="cover-letter-container">
                     <form  id="cover-letter-input" action="/home/write-cover-letter/" enctype="multipart/form-data" method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="job-description" id="job-description" />
-                        <button class="button" type="submit"> Generate cover letter </button>
+                        <button id="cover-letter-button" class="button disabled" type="submit"> Generate cover letter </button>
                     </form>
                 </div>
             </div>
         </div>
-        
-        <!-- <div class="main-box">
-        </div>
-
-        <div class="main-box sub-box">
-            <div class="content invisible cover-letter filter">
-                <div class="filter-split">
-                    <div class="dropdown">
-                      <button onclick="dropdown()" class="dropdown-button"> Sort by: </button>
-                      <div id="dropdown-content" class="dropdown-content">
-                        <a href="#" onclick="updateQuery('sort', 'date_posted')"> Date posted </a>
-                        <a href="#" onclick="updateQuery('sort', 'location')"> Location </a>
-                        <a href="#" onclick="updateQuery('sort', 'title')"> Title </a>
-                          <a href="#" onclick="updateQuery('sort', 'company')"> Company name </a>
-                      </div>
-                    </div>
-                    <div class="dropdown">
-                      <button onclick="dropdown2()" class="dropdown-button"> Order: </button>
-                      <div id="dropdown-content2" class="dropdown-content">
-                        <a href="#" onclick="updateQuery('direction', 'ASC')"> Ascending </a>
-                        <a href="#" onclick="updateQuery('direction', 'DESC')"> Descending </a>
-                      </div>
-                    </div>
-                </div>
-            </div>
-            <div class="content invisible cover-letter">
-                <form  id="cover-letter-input" action="/home/write-cover-letter/" enctype="multipart/form-data" method="POST">
-                    {% csrf_token %}
-                    <input type="hidden" name="job-description" id="job-description" />
-                    <button class="button cover-letter-button" type="submit"> Generate cover letter </button>
-                </form>
-            </div>
-        </div> -->
-
-        <!-- <div class="main-box sub-box">
-            <div class="content invisible cover-letter">
-               <form  id="statistics-input" action="/home/show-statistics/" method="POST">
-                   {% csrf_token %}
-                   <input type="hidden" name="statistics" id="statistics" />
-                   <button class="button" type="submit"> Show statistics </button>
-               </form>
-           </div>
-           <div class="content invisible cover-letter filter">
-               <div class="filter-split">
-                   <div class="dropdown">
-                     <button onclick="dropdown()" class="dropdown-button"> Sort by: </button>
-                     <div id="dropdown-content" class="dropdown-content">
-                       <a href="#" onclick="updateQuery('sort', 'date_posted')"> Date posted </a>
-                       <a href="#" onclick="updateQuery('sort', 'location')"> Location </a>
-                       <a href="#" onclick="updateQuery('sort', 'title')"> Title </a>
-                         <a href="#" onclick="updateQuery('sort', 'company')"> Company name </a>
-                     </div>
-                   </div>
-                   <div class="dropdown">
-                     <button onclick="dropdown2()" class="dropdown-button"> Order: </button>
-                     <div id="dropdown-content2" class="dropdown-content">
-                       <a href="#" onclick="updateQuery('direction', 'ASC')"> Ascending </a>
-                       <a href="#" onclick="updateQuery('direction', 'DESC')"> Descending </a>
-                     </div>
-                   </div>
-               </div>
-           </div>
-           <div class="content invisible cover-letter">
-               <form  id="cover-letter-input" action="/home/write-cover-letter/" enctype="multipart/form-data" method="POST">
-                   {% csrf_token %}
-                   <input type="hidden" name="job-description" id="job-description" />
-                   <button class="button cover-letter-button" type="submit"> Generate cover letter </button>
-               </form>
-           </div>
-       </div> -->
     </div>
     <script>
+        function jsEnableElement(id) {
+            if ( document.getElementById(id) ) {
+                document.getElementById(id).removeAttribute("disabled");
+                document.getElementById(id).className = "button";
+            }
+        }
+
         function showJobDetail(event) {
             const button = event.currentTarget;
 
@@ -261,7 +195,6 @@
 
         document.querySelectorAll(".delete-button").forEach(button => {
             button.addEventListener("click", async () => {
-                console.log("clicked");
                 const job_title = button.getAttribute("data-job-id");
                 const confirmed = confirm("Are you sure you want to delete this job?");
                 if (!confirmed) return;
@@ -300,4 +233,14 @@
 
     </script>
 </body>
+
+<footer>
+    <p> Created by: 
+        <a style="color: cornflowerblue; text-decoration: none; font-weight: 500;"> Huu An Duc (Jack) Le </a>
+    </p>
+    <p> Contact me at: 
+        <a href="mailto:huuanducle@gmail.com" style="color: cornflowerblue; text-decoration: none; font-weight: 500;">huuanducle@gmail.com</a>
+    </p>
+</footer>
+
 </html>

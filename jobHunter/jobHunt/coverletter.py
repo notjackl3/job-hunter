@@ -15,6 +15,7 @@ WRITING_ACCURACY = 0.8
 
 
 def extract_text_from_pdf(file):
+    print(file)
     extracted_resume_text = textract.process(file, method='pdfminer').decode('utf-8')
     return extracted_resume_text
 
