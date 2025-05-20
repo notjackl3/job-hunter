@@ -1,6 +1,5 @@
 from openai import OpenAI
 from dotenv import load_dotenv
-import textract
 import os
 
 load_dotenv()
@@ -16,8 +15,8 @@ WRITING_ACCURACY = 0.8
 
 def extract_text_from_pdf(file):
     print(file)
-    extracted_resume_text = textract.process(file, method='pdfminer').decode('utf-8')
-    return extracted_resume_text
+    # extracted_resume_text = textract.process(file, method='pdfminer').decode('utf-8')
+    return None
 
 
 def write(job_description, resume):
