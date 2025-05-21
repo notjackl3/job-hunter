@@ -89,13 +89,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'postgres',
-        'USER': 'postgres',
+        'USER': 'postgres.utdjspmupbywniwoebya',
         'PASSWORD': os.environ.get("PASSWORD"),
-        'HOST': 'db.utdjspmupbywniwoebya.supabase.co',
-        'PORT': 5432,
+        'HOST': 'aws-0-ap-southeast-1.pooler.supabase.com',
+        'PORT': 6543,
         'OPTIONS': {
-            'options': '-c statement_timeout=3000',
-            'sslmode': 'require'
+            'pool_mode': 'transaction'
         },
     }
 }
