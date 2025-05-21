@@ -92,7 +92,11 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': os.environ.get("PASSWORD"),
         'HOST': 'db.utdjspmupbywniwoebya.supabase.co',
-        'PORT': os.environ.get("PORT", 5432),
+        'PORT': 5432,
+        'OPTIONS': {
+            'options': '-c statement_timeout=3000',
+            'sslmode': 'require'
+        },
     }
 }
 
