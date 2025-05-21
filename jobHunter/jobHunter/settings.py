@@ -93,9 +93,6 @@ DATABASES = {
         'PASSWORD': os.environ.get("PASSWORD"),
         'HOST': 'aws-0-ap-southeast-1.pooler.supabase.com',
         'PORT': 6543,
-        'OPTIONS': {
-            'pool_mode': 'transaction'
-        },
     }
 }
 
