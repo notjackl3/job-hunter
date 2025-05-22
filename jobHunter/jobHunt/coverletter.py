@@ -1,6 +1,5 @@
 from openai import OpenAI
 from dotenv import load_dotenv
-import textract
 import os
 
 load_dotenv()
@@ -14,12 +13,6 @@ WRITING_CREATIVITY = 0.7
 WRITING_ACCURACY = 0.8
 
 
-def extract_text_from_pdf(file):
-    print(file)
-    extracted_resume_text = textract.process(file, method='pdfminer').decode('utf-8')
-    return extracted_resume_text
-
-
 def write(job_description, resume):
     resume_extractor = client.chat.completions.create(
         model=GPT_MODEL,
@@ -30,7 +23,7 @@ def write(job_description, resume):
             },
             {
                 "role": "user",
-                "content": f"Job description: {job_description}. Resume: {extract_text_from_pdf(resume)}"
+                "content": f"Job description: {job_description}. Resume: {resume}"
             }
         ],
         temperature=WRITING_CREATIVITY,

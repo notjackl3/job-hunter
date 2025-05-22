@@ -182,9 +182,9 @@ def add_job(request):
 
 
 def write_cover_letter(request):
-    job_description = request.POST.get("job-description")
-    file_data = write(job_description,
-                      "/Users/notjackl3/Documents/job-hunter/jobHunter/jobHunt/static/Huu An Duc (Jack) Le Resume.pdf")
+    job_description = request.POST.get("job-description-hidden")
+    resume = request.POST.get("resume-hidden")
+    file_data = write(job_description, resume)
     response = HttpResponse(file_data, content_type='application/text charset=utf-8')
     response['Content-Disposition'] = 'attachment; filename="cover-letter.txt"'
     return response
