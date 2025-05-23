@@ -8,6 +8,15 @@
     <link rel="stylesheet" href="{% static 'style.css' %}?v=1">
 </head>
 <body class="anti-scroll">
+    {% if request.user.is_authenticated %}
+    <nav>
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    </nav>
+    {% endif %}
+
     <div class="all">
         <div class="container">
             <div class="sub-container">
@@ -38,9 +47,8 @@
             </div>
             <div class="sub-container bottom" id="statistics-container">
                 <div class="statistics-button">
-                    <form id="statistics-input" action="/home/show-statistics/" method="POST">
+                    <form id="statistics-input" action="/show-statistics/" method="POST">
                         {% csrf_token %}
-                        <input type="hidden" name="statistics" id="statistics" />
                         <button class="button" type="submit"> Show statistics </button>
                     </form>
                 </div>
@@ -52,7 +60,7 @@
                     <ul class="job-posts">
                         {% for job in job_posts %}
                         <li class="job-post">
-                            <button type="submit" class="job-button" onclick="jsEnableElement('resume-button');"
+                            <button type="submit" class="job-button" onclick="enableElement('resume-button');"
                                     data-title="{{ job.title }}"
                                     data-company="{{ job.company }}"
                                     data-date_posted="{{ job.date_posted }}"
@@ -87,11 +95,12 @@
         </div>
         <div class="container">
             <div class="sub-container">
-                <div class="job-spec">
+                <div class="job-specification">
                     <div id="job-detail" class="job-detail">
                         <div class="resume" id="resume">
                             <textarea id="resume-input" class="resume-input" type="text" name="resume" placeholder="Copy and paste content of your resume here..."></textarea>
                         </div>
+
                         <div id="job-detail-text" class="job-detail-text">
                             <h1 id="detail-title"></h1>
                             <h2 id="detail-company"></h2>
@@ -105,16 +114,20 @@
             <div class="sub-container bottom">
                 <div class="cover-letter-container">
                     <button id="resume-button" class="button disabled" onclick="popUpResume()" type="submit"> Upload resume for cover letter </button>
-                    <form  id="cover-letter-input" action="/home/write-cover-letter/" enctype="multipart/form-data" method="POST">
+
+                    <form  id="cover-letter-input" action="/write-cover-letter/" enctype="multipart/form-data" method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="resume-hidden" id="resume-hidden">
+                        <input type="hidden" name="title-hidden" id="title-hidden" />
+                        <input type="hidden" name="company-hidden" id="company-hidden" />
                         <input type="hidden" name="job-description-hidden" id="job-description-hidden" />
-                        <button id="cover-letter-button" class="button" type="submit"> Generate cover letter </button>
+                        <button id="cover-letter-button" class="button" type="submit" onsubmit="handleJobDescription()"> Generate cover letter </button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    
     <script src="{% static 'utils.js' %}"></script>
     <script src="{% static 'scripts.js' %}"></script>
 </body>

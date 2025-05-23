@@ -21,3 +21,10 @@ function popUpResume() {
     document.getElementById('resume-button').style.display = "none";
     console.log("popped up");
 }
+
+function enableElement(id) {
+    if ( document.getElementById(id) ) {
+        document.getElementById(id).removeAttribute("disabled");
+        document.getElementById(id).className = "button";
+    }
+}

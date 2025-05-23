@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "jobHunt",
     "rest_framework",
+    "users"
 ]
 
 MIDDLEWARE = [
@@ -85,14 +86,24 @@ WSGI_APPLICATION = 'jobHunter.wsgi.application'
 # }
 
 load_dotenv()
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'postgres',
+#         'USER': 'postgres.utdjspmupbywniwoebya',
+#         'PASSWORD': os.environ.get("PASSWORD"),
+#         'HOST': 'aws-0-ap-southeast-1.pooler.supabase.com',
+#         'PORT': 6543,
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'postgres.utdjspmupbywniwoebya',
-        'PASSWORD': os.environ.get("PASSWORD"),
-        'HOST': 'aws-0-ap-southeast-1.pooler.supabase.com',
-        'PORT': 6543,
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'temp_db',          
+        'USER': 'notjackl3',        
+        'PASSWORD': '',             
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -146,3 +157,7 @@ REST_FRAMEWORK = {
 }
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+LOGIN_URL = '/users/login_user/'         
+LOGIN_REDIRECT_URL = '/'            
+LOGOUT_REDIRECT_URL = '/users/login_user/'

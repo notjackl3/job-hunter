@@ -15,12 +15,12 @@ def delete_duplicate_jobs():
             WHERE id NOT IN (
               SELECT MIN(id)
               FROM "jobHunt_jobpost"
-              GROUP BY title
+              GROUP BY title, user_id
             );
         """)
 
 
-def scrape(query: str, city: str, country: str, results_num: int, hours_old: int = 366):
+def scrape(user_id: int, query: str, city: str, country: str, results_num: int, hours_old: int = 366):
     jobs = scrape_jobs(
         site_name=["indeed", "linkedin", "google"],
         search_term=query,
@@ -65,7 +65,8 @@ def scrape(query: str, city: str, country: str, results_num: int, hours_old: int
                                 description=description,
                                 location=country,
                                 keywords=keywords,
-                                link=link)
+                                link=link,
+                                user_id=user_id)
                 new_post.save()
 
         delete_duplicate_jobs()

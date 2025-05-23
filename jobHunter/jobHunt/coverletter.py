@@ -13,7 +13,7 @@ WRITING_CREATIVITY = 0.7
 WRITING_ACCURACY = 0.8
 
 
-def write(job_description, resume):
+def write(title, company, job_description, resume):
     resume_extractor = client.chat.completions.create(
         model=GPT_MODEL,
         messages=[
@@ -23,7 +23,7 @@ def write(job_description, resume):
             },
             {
                 "role": "user",
-                "content": f"Job description: {job_description}. Resume: {resume}"
+                "content": f"Position: {title}, Company: {company}, Job description: {job_description}. Resume: {resume}"
             }
         ],
         temperature=WRITING_CREATIVITY,

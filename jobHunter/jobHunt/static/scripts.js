@@ -1,17 +1,7 @@
-document.getElementById('resume').style.display = "none";
-document.getElementById('cover-letter-input').style.display = "none";
-
 document.getElementById("cover-letter-input").addEventListener("submit", function (event) {
     const resume = document.getElementById("resume-input").value;
     document.getElementById("resume-hidden").value = resume;
 });
-
-function jsEnableElement(id) {
-    if ( document.getElementById(id) ) {
-        document.getElementById(id).removeAttribute("disabled");
-        document.getElementById(id).className = "button";
-    }
-}
 
 function showJobDetail(event) {
     const button = event.currentTarget;
@@ -31,15 +21,15 @@ function initializeJobButtons() {
     });
 }
 
-window.addEventListener('DOMContentLoaded', initializeJobButtons);
-
-var cover_letter_input = document.getElementById('cover-letter-input');
 function handleJobDescription(event) {
-    const job_description = document.getElementById('detail-description').innerText;
-    document.getElementById('job-description-hidden').value = job_description;
-}
+    const title = document.getElementById('detail-title').innerText;
+    const company = document.getElementById('detail-company').innerText;
+    const jobDescription = document.getElementById('detail-description').innerText;
 
-cover_letter_input.addEventListener('submit', handleJobDescription);
+    document.getElementById('title-hidden').value = title;
+    document.getElementById('company-hidden').value = company;
+    document.getElementById('job-description-hidden').value = jobDescription;
+}
 
 function dropdown() {
     document.getElementById("dropdown-content").classList.toggle("show");
@@ -118,3 +108,10 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
+document.getElementById('resume').style.display = "none";
+
+document.getElementById('cover-letter-input').style.display = "none";
+document.getElementById('cover-letter-input').addEventListener('submit', handleJobDescription);
+
+window.addEventListener('DOMContentLoaded', initializeJobButtons);

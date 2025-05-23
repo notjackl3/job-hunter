@@ -12,6 +12,7 @@ from nltk.corpus import stopwords, wordnet
 from nltk.stem import WordNetLemmatizer
 import re
 from rest_framework.decorators import api_view
+from django.contrib.auth.decorators import login_required
 
 
 # import nltk
@@ -126,70 +127,52 @@ def detect_action_words(text):
     return action_words
 
 
+@login_required
 def home(request):
+    if request.user.is_authenticated:
+        user_id = request.user.id
+    else:
+        user_id = None
+
     existing_job_posts = []
     sort_by = request.GET.get("sort", "date_posted")
     direction = request.GET.get("direction", "ASC")
     ordering = f"{'' if direction == 'ASC' else '-'}{sort_by}"
-    # with connection.cursor() as cursor:
-    #     cursor.execute(f"""
-    #         SELECT title, company, date_posted, description, keywords, link
-    #         FROM "jobHunt_jobpost"
-    #         ORDER BY {sort_by} {direction};
-    #         """)
-    #     results = cursor.fetchall()
-    #     for result in results:
-    #         existing_job_posts.append({"title": result[0],
-    #                                    "company": result[1],
-    #                                    "date_posted": result[2],
-    #                                    "description": result[3],
-    #                                    "keywords": result[4],
-    #                                    "link": result[5]})
-    existing_job_posts = JobPost.objects.all().order_by(ordering)
+
+    existing_job_posts = JobPost.objects.filter(user_id=user_id).order_by(ordering)
+    context = {"user_id": user_id}
     if existing_job_posts:
-        context = {"job_posts": existing_job_posts}
+        context["job_posts"] = existing_job_posts
         return render(request, "index.html", context)
     else:
-        return render(request, "index.html")
+        return render(request, "index.html", context)
 
 
+@login_required
 def add_job(request):
     query = request.POST.get("query")
     city = request.POST.get("city")
     country = request.POST.get("country")
     result_num = 100
     hours_old = request.POST.get("hours_old")
-    scrape(query, city, country, result_num, hours_old)
-    # job_posts = scrape(query, city, country, result_num, hours_old)
-    # context = {"job_posts": job_posts}
-    # return render(request, 'index.html', context)
-    # job_posts = []
-    # with connection.cursor() as cursor:
-    #     cursor.execute("""
-    #         SELECT title, company, date_posted, description, keywords, link
-    #         FROM "jobHunt_jobpost";
-    #         """)
-    #     results = cursor.fetchall()
-    #     for result in results:
-    #         job_posts.append({"title": result[0],
-    #                           "company": result[1],
-    #                           "date_posted": result[2],
-    #                           "description": result[3],
-    #                           "keywords": result[4],
-    #                           "link": result[5]})
-    # request.session['job_posts'] = job_posts
-    return redirect("/home")
+    user_id = request.user.id
+    scrape(user_id, query, city, country, result_num, hours_old)
+    return redirect("home")
 
 
+@login_required
 def write_cover_letter(request):
+    title = request.POST.get("title-hidden")
+    company = request.POST.get("company-hidden")
     job_description = request.POST.get("job-description-hidden")
     resume = request.POST.get("resume-hidden")
-    file_data = write(job_description, resume)
+    file_data = write(title, company, job_description, resume)
     response = HttpResponse(file_data, content_type='application/text charset=utf-8')
     response['Content-Disposition'] = 'attachment; filename="cover-letter.txt"'
     return response
 
 
+@login_required
 def show_statistics(request):
     descriptions = JobPost.objects.values_list('description', flat=True)
     languages = []
@@ -242,6 +225,8 @@ from rest_framework.decorators import api_view
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view, permission_classes
 
+
+@login_required
 @api_view(["DELETE"])
 @permission_classes([AllowAny])
 def delete_job(request, id):
