@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title> Login </title>
+    <title> Signup </title>
     <link rel="stylesheet" href="{% static 'authentication-style.css' %}">
 </head>
 <body>
@@ -23,9 +23,13 @@
                 <label> Password </label>
                 <input type="password" name="password" required>
             </div>
-            <div style="display: flex; flex-direction: column;">
-                <button type="submit" value="Submit" class="button main-button"> Login </button>
-                <a href="/users/signup-user" class="button"> Signup instead </a>
+            <div class="sub-container">
+                <label> Confirm password </label>
+                <input type="password" name="password2" required>
+            </div>
+            <div style="display: flex; flex-direction: column;">                
+                <button type="submit" value="Submit" class="button main-button"> Signup </button>
+                <a href="/users/login-user" class="button"> Login instead </a>
             </div>
         </form>
     </div>

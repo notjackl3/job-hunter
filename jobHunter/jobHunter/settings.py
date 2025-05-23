@@ -158,6 +158,6 @@ REST_FRAMEWORK = {
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-LOGIN_URL = '/users/login_user/'         
+LOGIN_URL = '/users/login-user/'         
 LOGIN_REDIRECT_URL = '/'            
-LOGOUT_REDIRECT_URL = '/users/login_user/'
+LOGOUT_REDIRECT_URL = '/users/login-user/'
