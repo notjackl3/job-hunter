@@ -10,11 +10,19 @@
         <h1 class="app-name"> Job Hunter </h1>
         {% if messages %}
             {% for message in messages %}
-            <p style="color:red;"> {{ message }} </p>
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                <p style="color:red; margin-top: 0;"> {{ message }} </p>
+                {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <p style="color:green; margin-top: 0;"> {{ message }} </p>
+                {% endif %}
             {% endfor %}
         {% endif %}
         <form action="" method="POST" class="container">
             {% csrf_token %}
+            <div class="sub-container">
+                <label class="test"> Email </label>
+                <input type="text" name="email" required>
+            </div>
             <div class="sub-container">
                 <label class="test"> Username </label>
                 <input type="text" name="username" required>

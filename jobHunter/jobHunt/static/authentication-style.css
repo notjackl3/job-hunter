@@ -6,38 +6,45 @@
 }
 
 html, body {
-    height: 90%;
+    height: 100%;
     overflow: hidden;
-
     background-color: lightblue;
 }
 
-.all {
-    height: 100%;
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
+.all {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    font-size: 1.5rem;
+    font-size: 1.2rem;
 }
 
 input {
     width: auto;
+
     padding: 0.5rem;
+    
     font-size: 1rem;
 }
 
 .container {
     height: auto;
     width: 200px;
-
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: start;
+
     padding: 2rem 4rem;
+    margin-bottom: 4rem;
     gap: 10px;
     background-color: white;
 }
@@ -45,7 +52,6 @@ input {
 .sub-container {
     height: 100%;
     width: 100%;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -74,10 +80,11 @@ input {
     transform: scale(1.1);
 }
 
-
 .app-name {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+
     color: white;
     font-size: 3em;
     text-shadow: 0.2em 0.2em #558abb;
-    margin-bottom: 0.5em;
 }

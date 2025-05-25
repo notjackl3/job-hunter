@@ -54,6 +54,8 @@ nav {
 
 .input {
     margin: 10px 0px 0px 0px;
+
+    color: steelblue;
 }
 
 .button {
@@ -89,7 +91,7 @@ nav {
 }
 
 .search-button {
-    margin: 10px 0px 0px 0px;
+    margin: 10px 0px 10px 0px;
     padding: 10px 15px 10px 15px;
     border-radius: 5px;
     background-color: steelblue;
@@ -111,6 +113,13 @@ nav {
 .button:hover {
     background-color: #2D68C4;
     transition: all 0.1s ease-out;
+}
+
+.user-input {
+    border-width: 0;
+    padding: 0.5em;
+    margin: 0.3em 0em 0.5em 0em;
+    border-radius: 0.5em;
 }
 
 .modal {
@@ -285,7 +294,7 @@ footer {
     color: white;
     font-style: italic;
     margin-top: 0;
-    margin-bottom: 1.2em;
+    margin-bottom: 1em;
 }
 
 .job-list {

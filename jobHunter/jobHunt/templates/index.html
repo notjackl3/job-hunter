@@ -28,19 +28,19 @@
                     {% csrf_token %}
                     <div class="input">
                         <label for="query"> Search query: </label><br>
-                        <input type="text" id="query" name="query"><br>
+                        <input type="text" id="query" class="user-input" name="query"><br>
                     </div>
                     <div class="input">
                         <label for="city"> City: </label><br>
-                        <input type="text" id="city" name="city"><br>
+                        <input type="text" id="city" class="user-input" name="city"><br>
                     </div>
                     <div class="input">
                         <label for="country"> Country: </label><br>
-                        <input type="text" id="country" name="country"><br>
+                        <input type="text" id="country" class="user-input" name="country"><br>
                     </div>
                     <div class="input">
                         <label for="hours_old"> Posts since _ hours ago: </label><br>
-                        <input type="text" id="hours_old" name="hours_old"><br>
+                        <input type="text" id="hours_old" class="user-input" name="hours_old"><br>
                     </div>
                         <button class="search-button" type="submit"> Search </button>
                 </form>

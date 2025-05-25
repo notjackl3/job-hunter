@@ -161,3 +161,14 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 LOGIN_URL = '/users/login-user/'         
 LOGIN_REDIRECT_URL = '/'            
 LOGOUT_REDIRECT_URL = '/users/login-user/'
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'users.backends.email_backend.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_POST = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = "musicjackl32482005@gmail.com"
+EMAIL_HOST_PASSWORD = "qzqe domp spzg evzx"
+PASSWORD_RESET_SUBJECT_TEMPLATE_NAME = "password_reset_subject.txt"
+
