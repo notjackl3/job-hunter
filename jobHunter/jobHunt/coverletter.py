@@ -1,9 +1,7 @@
 from openai import OpenAI
-from dotenv import load_dotenv
 import os
 
-load_dotenv()
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 GPT_MODEL = "gpt-3.5-turbo"
 WRITING_PROMPT = ("You will act as a helpful, smart hiring manager. You will be given a job description and a resume."
                   "Your job is to write a cover for that job, based on the experiences in the resume. Make sure to be"
