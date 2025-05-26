@@ -53,15 +53,13 @@ nav {
 }
 
 .input {
-    margin: 10px 0px 0px 0px;
-
+    margin: 0;
     color: steelblue;
 }
 
 .button {
     width: 100%;
     padding: 10px 15px 10px 15px;
-    background-color: steelblue;
     color: white;
     font-size: 16px;
     border: none;
@@ -80,11 +78,6 @@ nav {
     width: 100%;
 }
 
-.disabled {
-    background-color: grey;
-    pointer-events: none; 
-}
-
 .enabled:hover {
     background-color: #2D68C4;
     transition: all 0.1s ease-out;
@@ -94,15 +87,10 @@ nav {
     margin: 10px 0px 10px 0px;
     padding: 10px 15px 10px 15px;
     border-radius: 5px;
-    background-color: steelblue;
     color: white;
     font-size: 16px;
     border: none;
     cursor: pointer;
-}
-
-.search-button:hover {
-    background-color: #005A9C;
 }
 
 .main-box.sub-box {
@@ -110,16 +98,39 @@ nav {
     align-items: start;
 }
 
-.button:hover {
+.light {
+    background-color: #4B9CD3;
+}
+
+.light:hover {
+    background-color: #2980B9;
+    transition: all 0.1s ease-out;
+}
+
+.bold {
+    background-color: steelblue;
+}
+
+.bold:hover {
     background-color: #2D68C4;
     transition: all 0.1s ease-out;
+}
+
+.disabled {
+    background-color: grey;
+    pointer-events: none; 
 }
 
 .user-input {
     border-width: 0;
     padding: 0.5em;
-    margin: 0.3em 0em 0.5em 0em;
+    margin: 0.1em 0em 0.2em 0em;
     border-radius: 0.5em;
+}
+
+.search {
+    display: flex;
+    flex-direction: row;
 }
 
 .modal {
@@ -169,15 +180,10 @@ nav {
 .dropdown-button {
     width: 100%;
     padding: 10px 15px 10px 15px;
-    background-color: #4B9CD3;
     color: white;
     font-size: 16px;
     border: none;
     cursor: pointer;
-}
-
-.dropdown-button:hover, .dropbtn:focus {
-  background-color: #2980B9;
 }
 
 .dropdown-content {
@@ -262,6 +268,7 @@ footer {
 }
 
 .sub-container.list {
+    height: 82%;
     margin-bottom: 10px;
 }
 

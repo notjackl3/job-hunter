@@ -13,6 +13,7 @@ from nltk.stem import WordNetLemmatizer
 import re
 from rest_framework.decorators import api_view
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 
 # import nltk
@@ -137,9 +138,17 @@ def home(request):
     existing_job_posts = []
     sort_by = request.GET.get("sort", "date_posted")
     direction = request.GET.get("direction", "ASC")
+    query = request.GET.get("query")
     ordering = f"{'' if direction == 'ASC' else '-'}{sort_by}"
-
-    existing_job_posts = JobPost.objects.filter(user_id=user_id).order_by(ordering)
+    
+    if query:
+        existing_job_posts = JobPost.objects.filter(Q(title__icontains=query) | 
+                                                    Q(company__icontains=query) | 
+                                                    Q(description__icontains=query), 
+                                                    user_id=user_id).order_by(ordering)
+    else:
+        existing_job_posts = JobPost.objects.filter(user_id=user_id).order_by(ordering)
+                
     context = {"user_id": user_id}
     if existing_job_posts:
         context["job_posts"] = existing_job_posts

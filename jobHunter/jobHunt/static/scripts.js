@@ -71,6 +71,15 @@ function updateQuery(key, value) {
     window.location = url.href;      
 }
 
+function searchJob() {
+    const job_query = document.getElementById("search").value;
+    updateQuery('query', job_query);
+}
+
+function resetSearch() {
+    updateQuery('query', "");
+}
+
 document.querySelectorAll(".delete-button").forEach(button => {
     button.addEventListener("click", async () => {
         const job_title = button.getAttribute("data-job-id");

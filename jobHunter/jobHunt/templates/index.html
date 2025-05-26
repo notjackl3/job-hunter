@@ -12,7 +12,7 @@
     <nav>
         <form action="{% url 'logout' %}" method="post">
             {% csrf_token %}
-            <button class="logout" type="submit">Logout</button>
+            <button class="logout light" type="submit">Logout</button>
         </form>
     </nav>
     {% endif %}
@@ -42,20 +42,31 @@
                         <label for="hours_old"> Posts since _ hours ago: </label><br>
                         <input type="text" id="hours_old" class="user-input" name="hours_old"><br>
                     </div>
-                        <button class="search-button" type="submit"> Search </button>
+                        <button class="search-button bold" type="submit"> Search </button>
                 </form>
             </div>
             <div class="sub-container bottom" id="statistics-container">
                 <div class="statistics-button">
                     <form id="statistics-input" action="/show-statistics/" method="POST">
                         {% csrf_token %}
-                        <button class="button" type="submit"> Show statistics </button>
+                        <button class="button bold" type="submit"> Show statistics </button>
                     </form>
                 </div>
             </div>
         </div>
         <div class="container">
-            <div class="sub-container list">
+            <div class="sub-container bottom" style="height: auto;">
+                <div class="statistics-button">
+                    <div class="search" id="search-job">
+                        {% csrf_token %}
+                        <input class="user-input" style="flex: 4; border-radius: 0; border-width: 0.1em; border-color: steelblue; box-shadow: none; margin: 0;" type="text" id="search" name="search">
+                        <button class="button bold" style="flex: 1" onclick="searchJob()"> Search </button>
+                        <button class="button light" style="flex: 1" onclick="resetSearch()"> Reset </button>
+
+                    </div>
+                </div>
+            </div>
+            <div class="sub-container list" style="justify-content: start;">
                 <div class="job-list">
                     <ul class="job-posts">
                         {% for job in job_posts %}
@@ -74,9 +85,9 @@
                     </ul>
                 </div>
             </div>
-            <div class="sub-container bottom split">
+            <div class="sub-container bottom split" style="height: auto;">
                 <div class="dropdown-4">
-                    <button onclick="dropdown()" class="dropdown-button"> Sort by: </button>
+                    <button onclick="dropdown()" class="dropdown-button light"> Sort by: </button>
                     <div id="dropdown-content" class="dropdown-content">
                         <a href="#" onclick="updateQuery('sort', 'date_posted')"> Date posted </a>
                         <a href="#" onclick="updateQuery('sort', 'location')"> Location </a>
@@ -85,7 +96,7 @@
                     </div>
                 </div>
                 <div class="dropdown-2">
-                    <button onclick="dropdown2()" class="dropdown-button"> Sort by: </button>
+                    <button onclick="dropdown2()" class="dropdown-button light"> Sort by: </button>
                     <div id="dropdown-content2" class="dropdown-content">
                         <a href="#" onclick="updateQuery('direction', 'ASC')"> Ascending </a>
                         <a href="#" onclick="updateQuery('direction', 'DESC')"> Descending </a>
@@ -113,7 +124,7 @@
             </div>
             <div class="sub-container bottom">
                 <div class="cover-letter-container">
-                    <button id="resume-button" class="button disabled" onclick="popUpResume()" type="submit"> Upload resume for cover letter </button>
+                    <button id="resume-button" class="button bold disabled" onclick="popUpResume()" type="submit"> Upload resume for cover letter </button>
 
                     <form  id="cover-letter-input" action="/write-cover-letter/" enctype="multipart/form-data" method="POST">
                         {% csrf_token %}
@@ -121,7 +132,7 @@
                         <input type="hidden" name="title-hidden" id="title-hidden" />
                         <input type="hidden" name="company-hidden" id="company-hidden" />
                         <input type="hidden" name="job-description-hidden" id="job-description-hidden" />
-                        <button id="cover-letter-button" class="button" type="submit" onsubmit="handleJobDescription()"> Generate cover letter </button>
+                        <button id="cover-letter-button" class="button bold" type="submit" onsubmit="handleJobDescription()"> Generate cover letter </button>
                     </form>
                 </div>
             </div>
