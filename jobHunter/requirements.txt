@@ -1,3 +1,6 @@
+Django
+whitenoise
+gunicorn
 annotated-types==0.7.0
 anyio==4.9.0
 argcomplete==1.10.3
@@ -9,13 +12,11 @@ charset-normalizer==3.4.2
 click==8.2.0
 compressed-rtf==1.0.7
 distro==1.9.0
-Django==5.2.1
 djangorestframework==3.16.0
 docx2txt==0.9
 dotenv==0.9.9
 ebcdic==1.1.1
 extract-msg==0.28.7
-gunicorn==23.0.0
 h11==0.16.0
 httpcore==1.0.9
 httpx==0.28.1
@@ -34,7 +35,6 @@ packaging==25.0
 pandas==2.2.3
 pdfminer.six==20191110
 pillow==11.2.1
-psycopg2==2.9.10
 psycopg2-binary==2.9.10
 pycountry==24.6.1
 pycryptodome==3.22.0

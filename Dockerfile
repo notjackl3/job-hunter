@@ -1,20 +1,16 @@
-# Base Python image
-FROM python:3.11
+ARG PYTHON_VERSION=3.11.9
+FROM python:${PYTHON_VERSION}-slim AS base
 
-# Set env flags for clean output and no .pyc files
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+WORKDIR /app
 
-# Set working directory
-WORKDIR /code
+COPY ./jobHunter ./
 
-# Copy everything from the host into the container
-COPY . /code/
+EXPOSE 8000
 
-# Install dependencies from requirements.txt inside jobHunter/
-RUN pip install --upgrade pip
-RUN pip install -r jobHunter/requirements.txt
-RUN python3 -m nltk.downloader punkt_tab averaged_perceptron_tagger_eng stopwords wordnet
+RUN pip install --upgrade pip --no-cache-dir
+RUN pip install -r /app/requirements.txt --no-cache-dir
+RUN python3 manage.py collectstatic --noinput
 
-# Set working directory to where manage.py is
-WORKDIR /code/jobHunter
+# CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["gunicorn", "jobHunter.wsgi:application", "--bind", "0.0.0.0:8000"]
+

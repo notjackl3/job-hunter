@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-$*w%rio_lhbl!he6y436e71bvky+gbs%$640#pxd&(kbv#wi9#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '54.206.232.213', '127.0.0.1']
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '54.206.232.213', '127.0.0.1']
 
 
 # Application definition
@@ -53,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
 ROOT_URLCONF = 'jobHunter.urls'
@@ -88,7 +89,7 @@ WSGI_APPLICATION = 'jobHunter.wsgi.application'
 load_dotenv()
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': "django.db.backends.postgresql",
         'NAME': os.environ.get("DB_NAME", "postgres"),
         'USER': os.environ.get("DB_USER", "postgres"),
         'PASSWORD': os.environ.get("DB_PASSWORD", ""),
@@ -142,6 +143,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
