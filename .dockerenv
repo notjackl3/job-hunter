@@ -1,0 +1,15 @@
+# This is for postgresql connection to Supabase
+DB_NAME=postgres
+DB_USER=postgres.utdjspmupbywniwoebya
+DB_PASSWORD=itismejack2482005
+DB_HOST=aws-0-ap-southeast-1.pooler.supabase.com
+DB_PORT=6543
+
+OPENAI_API_KEY=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
+
+# This is for docker connection to AWS RDS
+# DB_NAME=postgres
+# DB_USER=postgres
+# DB_PASSWORD=itismejack2482005
+# DB_HOST=job-hunter-db.cx4i6qmy6ii7.ap-southeast-2.rds.amazonaws.com
+# DB_PORT=5432
